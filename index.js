@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require('mongoose');
 const path = require("path");
-const User = require("./Models/User");
+const User = require("./models/User");
 
 main()
     .then((result) => {
@@ -15,7 +15,7 @@ async function main() {
 }
 
 app.set("view engine", "ejs");
-app.set("Views", path.join(__dirname, "Views"));
+app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({
     extended: true
