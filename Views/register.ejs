@@ -8,27 +8,28 @@
 </head>
 
 <body>
-    <form>
+    <form method="post" action="/register">
         <label for="name">Name:
-            <input name="name" placeholder="Name">
+            <input name="user[name]" placeholder="Name" required>
         </label>
         <br><br>
         <label for="email">Email:
-            <input name="email" placeholder="E-Mail">
+            <input name="user[email]" placeholder="E-Mail" required>
         </label>
         <br><br>
         <label for="password">Password:
-            <input type="password" name="password" placeholder="strong password">
+            <input type="password" name="user[password]" placeholder="strong password" required>
         </label>
         <br><br>
         <label for="headline">Headline:
-            <input name="headline" placeholder="Headline">
+            <input name="user[headLine]" placeholder="Headline" required>
         </label>
         <br><br>
         <label for="bio">Bio:
-            <textarea name="bio" placeholder="Say something about you" rows="10" cols="50"></textarea>
+            <textarea name="user[bio]" placeholder="Say something about you" rows="10" cols="50" required></textarea>
         </label>
         <br><br>
+        <button>Register</button>
     </form>
 </body>
 

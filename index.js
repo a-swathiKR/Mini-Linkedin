@@ -29,6 +29,24 @@ app.get("/register", (req, res) => {
     res.render("register.ejs");
 })
 
+app.post("/register", async (req, res) => {
+    let userData = req.body.user;
+
+    //checking for duplicate emails
+    let existingUser = await User.findOne({
+        email: userData.email
+    });
+
+    if (existingUser) {
+        return res.send("User email exists");
+    }
+
+    let newData = new User(
+        userData);
+    await newData.save();
+    res.redirect("/register");
+})
+
 app.listen("8080", (req, res) => {
     console.log("listening to the port 8080")
 })
