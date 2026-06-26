@@ -5,17 +5,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Linkedin - home</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
-    <h1>MINI LINKEDIN</h1>
-    <form method="get" action="/register">
-        <button>Register</button>
-    </form>
-    <br><br>
-    <form method="get" action="/login">
-        <button>Login</button>
-    </form>
+    <nav class="nav-bar">
+        <h2>MINI LINKEDIN</h2>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1>Build your professional network</h1>
+        <p>Connect with developers, share your projects, and grow your career</p>
+        <div class="hero - buttons">
+            <a href="/register" class="btn">Get started</a>
+            <a href="/login" class="btn">Login</a>
+        </div>
+    </header>
+    <section class="features">
+        <h2>Why choose mini-linkedin?</h2>
+        <div class="cards">
+            <div class="card">
+                <h3>👤 Create Profile</h3>
+                <p>Showcase your skills</p>
+            </div>
+            <div class="card">
+                <h3> 📝 Share Posts</h3>
+                <p>Share your knowledge.</p>
+            </div>
+            <div class="card">
+                <h3>🤝 Build Network</h3>
+                <p> Connect with professionals.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <footer>
+        <p>© 2026 Mini Linkedin</p>
+        <p>made with html, css, express and mongoDB</p>
+    </footer>
 </body>
 
 </html>
