@@ -28,7 +28,7 @@ body {
     transition: 0.3s;
 }
 
-.nav-links a :hover {
+.nav-links a:hover {
     color: #0A66C2;
 }
 
@@ -64,7 +64,7 @@ header p {
     font-weight: bold;
 }
 
-.hero-btn .btn :hover {
+.hero-btn .btn:hover {
     background-color: #013263;
 }
 
@@ -75,7 +75,7 @@ header p {
 
 .cards {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 30px;
 }
 
@@ -106,4 +106,15 @@ footer p {
 footer p:last-child {
     color: #cfcfcf;
     font-size: 14px;
+}
+
+@media(max-width: 768px) {
+    .nav-bar {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .nav-links {
+        justify-content: center;
+    }
 }

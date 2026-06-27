@@ -5,32 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
+    <link rel="stylesheet" href="/css/formStyle.css">
 </head>
 
 <body>
-    <form method="post" action="/register">
-        <label for="name">Name:
+    <div class="form-container">
+        <label class="form-card" method="post" action="/register">
+            <h1>MINI LINKEDIN</h1>
+            <h3>Create your account</h3>
+            <label for="name">Name:</label>
             <input name="user[name]" placeholder="Name" required>
-        </label>
-        <br><br>
-        <label for="email">Email:
+            <br><br>
+            <label for="email">Email:</label>
             <input name="user[email]" placeholder="E-Mail" required>
-        </label>
-        <br><br>
-        <label for="password">Password:
+            <br><br>
+            <label for="password">Password:</label>
             <input type="password" name="user[password]" placeholder="strong password" required>
-        </label>
-        <br><br>
-        <label for="headline">Headline:
+            <br><br>
+            <label for="headline">Headline:</label>
             <input name="user[headLine]" placeholder="Headline" required>
-        </label>
-        <br><br>
-        <label for="bio">Bio:
+            <br><br>
+            <label for="bio">Bio:</label>
             <textarea name="user[bio]" placeholder="Say something about you" rows="10" cols="50" required></textarea>
-        </label>
-        <br><br>
-        <button>Register</button>
-    </form>
+            <br><br>
+            <button>Register</button>
+            </form>
+    </div>
+
 </body>
 
 </html>
