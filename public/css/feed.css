@@ -1,0 +1,41 @@
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.feed {
+    width: 700px;
+    margin: 40px auto;
+    max-width: 95%;
+
+}
+
+.post-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px black;
+    padding: 1.5rem;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+}
+
+.post-card h2 {
+    margin-top: 2px;
+}
+
+.post-card .headline {
+    font-size: 15px;
+}
+
+.post-card .content {
+    color: rgb(67, 66, 66);
+    line-height: 1.6;
+}
+
+.post-card .date {
+    color: gray;
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+}

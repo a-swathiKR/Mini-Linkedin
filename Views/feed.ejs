@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed</title>
+    <link rel="stylesheet" href="/css/feed.css">
+    <link rel="stylesheet" href="/css/nav-bar.css">
+</head>
+
+<body>
+    <div class="nav-bar">
+        <h2>MINI LINKEDIN</h2>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/post/new">Create post</a>
+            <a href="/profile">Profile</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+    <div class="feed">
+        <% for(let post of posts) { %>
+        <div class="post-card">
+            <h2><%=post.author.name%></h2>
+
+            <p class="headline"><%=post.author.headLine%></p>
+            <hr>
+
+            <p class="content"><i><%=post.content%></i></p>
+
+            <p class="date"><%=post.createdAt.toDateString()%></p>
+        </div>
+        <%}%>
+    </div>
+
+    <script>
+window.addEventListener("pageshow", function (event) {
+    if (event.persisted) {
+        window.location.reload();
+    }
+});
+</script>
+</body>
+
+</html>

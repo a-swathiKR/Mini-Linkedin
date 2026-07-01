@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const path = require("path");
 const User = require("./models/User");
+const Post = require("./models/Post");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 main()
@@ -28,6 +29,14 @@ app.use(
         saveUninitialized: false
     })
 );
+
+app.use((req, res, next) => {
+    res.set(
+        "Cache-Control",
+        "no-store, no-cache, must-revalidate, private"
+    );
+    next();
+});
 
 app.get("/", (req, res) => {
     res.render("home.ejs");
@@ -55,7 +64,7 @@ app.post("/register", async (req, res) => {
     let newData = new User(
         userData);
     await newData.save();
-    res.redirect("/register");
+    res.redirect("/login");
 })
 
 app.get("/login", (req, res) => {
@@ -76,7 +85,7 @@ app.post("/login", async (req, res) => {
 
     if (isMatch) {
         req.session.user_id = userData._id;
-        return res.send("login successful");
+        return res.redirect("/feed");
 
     }
 
@@ -93,23 +102,51 @@ app.get("/profile", isLoggedin, async (req, res) => {
 
 function isLoggedin(req, res, next) {
     if (!req.session.user_id) {
-        return res.send("Login first");
+        return res.redirect("/login");
     }
 
     next();
 }
 
+
+
+//create a new post
+app.get("/post/new", isLoggedin, (req, res) => {
+    res.render("newPost.ejs");
+})
+
+app.post("/post", isLoggedin, async (req, res) => {
+
+    const newPost = new Post({
+        content: req.body.content,
+        author: req.session.user_id
+    })
+
+    await newPost.save();
+    res.redirect("/feed");
+})
+
+//creating feed
+app.get("/feed", isLoggedin, async (req, res) => {
+    const posts = await Post.find().populate("author").sort({
+        createdAt: -1
+    });
+    res.render("feed.ejs", {
+        posts
+    });
+})
+
+//Logout
 app.get("/logout", (req, res) => {
     req.session.destroy((err) => {
         if (err) {
-            console.log("some issue in logging out");
+            console.log("error in logging out");
         }
 
-        res.send("successfully logged out");
+        res.redirect("/login");
+
     })
 })
-
-
 app.listen("8080", (req, res) => {
     console.log("listening to the port 8080")
 })
