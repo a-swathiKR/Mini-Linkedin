@@ -5,13 +5,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
+    <link rel="stylesheet" href="/css/nav-bar.css">
+    <link rel="stylesheet" href="/css/profile.css">
 </head>
 
 <body>
-    <h3>Name : <%=userData.name%></h3>
-    <p>Email : <%=userData.email%></p>
-    <p>headLine : <%=userData.headLine%></p>
-    <p>bio : <%=userData.bio%></p>
+    <nav class="nav-bar">
+        <h2>MINI LINKEDIN</h2>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/post/new">Create Post</a>
+            <a href="/feed">Feed</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+    <h2 class="myProfile">MY PROFILE</h2>
+
+    <div class="user-data">
+
+        <h3>Name : <%=userData.name%></h3>
+        <p class="email">Email : <%=userData.email%></p>
+        <p class="headline">headLine : <%=userData.headLine%></p>
+        <p>bio : <%=userData.bio%></p>
+        <p class="post-count">No of posts: <%=posts.length%></p>
+    </div>
+
+    <h2 class="my-posts">My Posts</h2>
+    <% if(posts.length == 0){ %>
+    <div class="empty-posts">
+        <h3>No Posts Yet!</h3>
+        <p>Create your first post ans start sharing!</p>
+    </div>
+    <% }else{ %>
+    <%for (let post of posts){%>
+    <div class="post-card">
+        <p><%=post.content%></p>
+        <small>
+            <%=post.createdAt.toDateString()%>
+        </small>
+        <div class="btns">
+            <form method="post" action="/post/delete/<%=post._id%>?_method=DELETE">
+                <button class="btn">Delete</button>
+            </form>
+            <form method="get" action="/post/edit/<%=post._id%>">
+                <button class="btn">Edit</button>
+            </form>
+        </div>
+    </div>
+    <%}%>
+    <%}%>
 
     <script>
         window.addEventListener("pageshow", function (event) {

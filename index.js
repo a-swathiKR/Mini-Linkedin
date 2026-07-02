@@ -6,6 +6,7 @@ const User = require("./models/User");
 const Post = require("./models/Post");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
+const methodOverride = require("method-override");
 main()
     .then((result) => {
         console.log("conection successful");
@@ -37,6 +38,8 @@ app.use((req, res, next) => {
     );
     next();
 });
+
+app.use(methodOverride("_method"));
 
 app.get("/", (req, res) => {
     res.render("home.ejs");
@@ -95,8 +98,18 @@ app.post("/login", async (req, res) => {
 
 app.get("/profile", isLoggedin, async (req, res) => {
     let userData = await User.findById(req.session.user_id);
+
+    let posts = await Post.find({
+        author: req.session.user_id
+    }).sort({
+        createdAt: -1
+    });
+
+    // console.log(userData);
+    // console.log(post);
     res.render("profile.ejs", {
-        userData
+        userData,
+        posts
     });
 })
 
@@ -146,6 +159,67 @@ app.get("/logout", (req, res) => {
         res.redirect("/login");
 
     })
+})
+
+app.delete("/post/delete/:id", isLoggedin, async (req, res) => {
+    let {
+        id
+    } = req.params;
+
+    const post = await Post.findById(id);
+
+    if (!post) {
+        return res.send("Post not found");
+    }
+
+    if (post.author.toString() != req.session.user_id.toString()) {
+        return res.status(403).send("Unauthorised");
+    }
+
+    await Post.findByIdAndDelete(id);
+    res.redirect("/profile");
+})
+
+app.get("/post/edit/:id", isLoggedin, async (req, res) => {
+    let {
+        id
+    } = req.params;
+
+    const post = await Post.findById(id);
+
+    if (!post) {
+        return res.send("Post not found");
+    }
+
+    if (post.author.toString() != req.session.user_id.toString()) {
+        return res.status(403).send("Unauthorised");
+    }
+
+    res.render("editPost.ejs", {
+        post
+    });
+})
+
+app.put("/post/edit/:id", isLoggedin, async (req, res) => {
+    let {
+        id
+    } = req.params;
+
+    let post = await Post.findById(id);
+
+    if (!post) {
+        return res.status(404).send("Post not found");
+    }
+
+    if (post.author.toString() != req.session.user_id.toString()) {
+        return res.status(403).send("Unauthorised");
+    }
+
+    post.content = req.body.content;
+    await post.save();
+
+    res.redirect("/profile");
+
 })
 app.listen("8080", (req, res) => {
     console.log("listening to the port 8080")

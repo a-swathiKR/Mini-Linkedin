@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Your Post</title>
+    <link rel="stylesheet" href="/css/profile.css">
+    <link rel="stylesheet" href="/css/edit.css">
+</head>
+
+<body>
+    <div class="edit-card">
+        <h2>Edit Your Post!!</h2>
+        <form method="post" action="/post/edit/<%=post._id%>?_method=PUT">
+            <textarea name="content" rows="5" cols="10" class="contentArea"><%=post.content%></textarea>
+            <br>
+            <button class="btn">Edit</button>
+        </form>
+    </div>
+
+</body>
+
+</html>

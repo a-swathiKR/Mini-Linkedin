@@ -1,0 +1,23 @@
+h2 {
+    text-align: center;
+}
+
+.contentArea {
+    margin-left: 2rem;
+    width: 20rem;
+    height: 100px;
+}
+
+.edit-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0);
+    padding: 20px;
+    width: 400px;
+    margin: 50px auto;
+
+}
+
+.btn {
+    margin-left: 2rem;
+}
