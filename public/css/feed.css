@@ -39,3 +39,14 @@ body {
 .post-card:hover {
     transform: translateY(-5px);
 }
+
+.post-comment .username {
+    font-weight: 600;
+}
+
+.comment-content {
+    background: #f3f2ef;
+    border-radius: 8px;
+    padding: 10px;
+    margin-right: 10px;
+}

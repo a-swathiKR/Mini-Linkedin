@@ -7,6 +7,7 @@
     <title>Feed</title>
     <link rel="stylesheet" href="/css/feed.css">
     <link rel="stylesheet" href="/css/nav-bar.css">
+    <link rel="stylesheet" href="/css/likeBtn.css">
 </head>
 
 <body>
@@ -30,17 +31,46 @@
             <p class="content"><i><%=post.content%></i></p>
 
             <p class="date"><%=post.createdAt.toDateString()%></p>
+
+            <form method="post" action="/post/likes/<%=post._id%>">
+                <% if(post.likes.some(id => id.toString() === userId.toString())){ %>
+                <button class="btn unlike">
+                    💙 Unlike
+                </button>
+                <%}else { %>
+                <button class="btn like">
+                    ❤️ Like
+                </button>
+                <% } %>
+                <p>Likes: <%=post.likes.length%></p>
+            </form>
+
+            <h4>Comments</h4>
+            <% for(let comment of post.comments) { %>
+            <div class="post-comment">
+                <p class="username"><%=comment.user.name%></p>
+
+                <p><%=comment.text%></p>
+            </div>
+            <% } %>
+
+            <form method="post" action="/post/comment/<%=post.id%>">
+                <input type="text" name="comment" placeholder="Add a comment" class="comment-content">
+                <button class="btn comment">Add comment</button>
+            </form>
         </div>
+
         <%}%>
+        
     </div>
 
     <script>
-window.addEventListener("pageshow", function (event) {
-    if (event.persisted) {
-        window.location.reload();
-    }
-});
-</script>
+        window.addEventListener("pageshow", function (event) {
+            if (event.persisted) {
+                window.location.reload();
+            }
+        });
+    </script>
 </body>
 
 </html>

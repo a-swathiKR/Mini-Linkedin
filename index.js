@@ -141,11 +141,12 @@ app.post("/post", isLoggedin, async (req, res) => {
 
 //creating feed
 app.get("/feed", isLoggedin, async (req, res) => {
-    const posts = await Post.find().populate("author").sort({
+    const posts = await Post.find().populate("author").populate("comments.user").sort({
         createdAt: -1
     });
     res.render("feed.ejs", {
-        posts
+        posts,
+        userId: req.session.user_id
     });
 })
 
@@ -221,6 +222,56 @@ app.put("/post/edit/:id", isLoggedin, async (req, res) => {
     res.redirect("/profile");
 
 })
+
+app.post("/post/likes/:id", isLoggedin, async (req, res) => {
+    let {
+        id
+    } = req.params;
+
+    const post = await Post.findById(id);
+    if (!post) {
+        res.status(404).send("Post not found");
+    }
+
+    const alreadyLiked = post.likes.some(
+        likeId => likeId.toString() === req.session.user_id.toString()
+    )
+
+    if (alreadyLiked) {
+        post.likes = post.likes.filter(likeId => likeId.toString() != req.session.user_id.toString())
+    } else {
+        post.likes.push(req.session.user_id)
+    }
+
+    await post.save();
+    res.redirect("/feed");
+})
+
+app.post("/post/comment/:id", isLoggedin, async (req, res) => {
+    let {
+        id
+    } = req.params;
+    let {
+        comment
+    } = req.body;
+
+    if (!comment || comment.trim() === "") {
+        res.send("comment cannot be empty");
+    }
+
+    let post = await Post.findById(id);
+    if (!post) {
+        res.status(404).send("Post not found");
+    }
+
+    post.comments.push({
+        user: req.session.user_id,
+        text: comment
+    });
+    await post.save();
+    res.redirect("/feed");
+})
+
 app.listen("8080", (req, res) => {
     console.log("listening to the port 8080")
 })
